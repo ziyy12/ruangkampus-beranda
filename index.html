@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="RuangKampus: lihat status dan jadwal resmi ruang belajar kampus sebelum berjalan ke sana.">
+  <title>RuangKampus | Daftar Status Ruang</title>
+  <!-- Font logo "Jolly Lodger" dari Google Fonts (sama dengan desain Figma) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Jolly+Lodger&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <!-- Tautan lompat untuk pengguna keyboard dan pembaca layar -->
+  <a class="skip-link" href="#daftar-ruang">Lewati ke daftar ruang</a>
+
+  <!-- KOMPONEN 1: Header situs (tetap di atas saat halaman digulir) -->
+  <header class="site-header">
+    <div class="container">
+      <p class="logo">Ruang<span>Kampus</span></p>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- KOMPONEN 2: Panel pencarian, kategori, dan filter fasilitas -->
+    <section class="panel" aria-labelledby="judul-cari">
+      <h1 id="judul-cari" class="sr-only">Cari ruang belajar kampus</h1>
+
+      <!-- Bilah pencarian (FR4) -->
+      <form class="search" role="search" id="form-cari" novalidate>
+        <label for="input-cari" class="sr-only">Cari nama ruang atau kategori</label>
+        <input type="search" id="input-cari" name="cari" placeholder="Cari ruang, misalnya Lab 1" autocomplete="off">
+      </form>
+
+      <!-- Tab kategori: Semua, Kelas, Lab. Kom, Ruang Bersama -->
+      <nav class="tabs" aria-label="Kategori ruang">
+        <button type="button" class="tab" data-kategori="semua" aria-pressed="true">Semua</button>
+        <button type="button" class="tab" data-kategori="kelas" aria-pressed="false">Kelas</button>
+        <button type="button" class="tab" data-kategori="lab" aria-pressed="false">Lab. Kom</button>
+        <button type="button" class="tab" data-kategori="bersama" aria-pressed="false">Ruang Bersama</button>
+      </nav>
+
+      <!-- Filter fasilitas (FR5) yang bisa dibuka dan ditutup -->
+      <details class="filter" open>
+        <summary>Filter Fasilitas</summary>
+        <fieldset>
+          <legend class="sr-only">Pilih fasilitas yang dibutuhkan</legend>
+          <label><input type="checkbox" name="fasilitas" value="stopkontak"> Stopkontak Banyak</label>
+          <label><input type="checkbox" name="fasilitas" value="wifi"> Wi-Fi Kencang</label>
+          <label><input type="checkbox" name="fasilitas" value="ac"> AC Dingin</label>
+          <label><input type="checkbox" name="fasilitas" value="pc"> Tersedia PC</label>
+        </fieldset>
+        <button type="button" class="btn btn-text" id="btn-reset">Reset filter</button>
+      </details>
+    </section>
+
+    <!-- KOMPONEN 3: Daftar status ruangan (kartu ruang) -->
+    <section class="rooms" id="daftar-ruang" aria-labelledby="judul-daftar" tabindex="-1">
+      <div class="rooms-head">
+        <h2 id="judul-daftar">Daftar Status Ruangan Kampus</h2>
+        <!-- aria-live: pembaca layar diberi tahu saat jumlah ruang berubah -->
+        <p class="count" id="jumlah-ruang" aria-live="polite">Menampilkan 7 ruangan</p>
+      </div>
+
+      <div class="room-list" id="room-list">
+
+        <!-- Setiap kartu: data-* dipakai script.js untuk pencarian dan filter. Data di bawah adalah contoh. -->
+        <article class="card" data-id="kelas-1" data-nama="Kelas 1" data-kategori="kelas" data-lantai="3" data-fasilitas="wifi stopkontak ac">
+          <header class="card-head">
+            <p class="card-meta">Kelas &middot; Lantai 3</p>
+            <span class="badge badge-tersedia" data-badge>Tersedia</span>
+          </header>
+          <h3>Kelas 1</h3>
+          <ul class="facilities" aria-label="Fasilitas Kelas 1">
+            <li>40 kursi</li><li>Wi-Fi</li><li>Stopkontak</li><li>AC</li>
+          </ul>
+          <p class="updated" data-updated>Diperbarui 5 menit lalu</p>
+          <div class="card-actions">
+            <button type="button" class="btn btn-secondary" data-aksi="jadwal">Jadwal Resmi</button>
+            <button type="button" class="btn btn-primary-soft" data-aksi="lapor">Lapor Kondisi</button>
+          </div>
+        </article>
+
+        <article class="card" data-id="kelas-2" data-nama="Kelas 2" data-kategori="kelas" data-lantai="3" data-fasilitas="wifi stopkontak ac">
+          <header class="card-head">
+            <p class="card-meta">Kelas &middot; Lantai 3</p>
+            <span class="badge badge-tersedia" data-badge>Tersedia</span>
+          </header>
+          <h3>Kelas 2</h3>
+          <ul class="facilities" aria-label="Fasilitas Kelas 2">
+            <li>30 kursi</li><li>Wi-Fi</li><li>Stopkontak</li><li>AC</li>
+          </ul>
+          <p class="updated" data-updated>Diperbarui 5 menit lalu</p>
+          <div class="card-actions">
+            <button type="button" class="btn btn-secondary" data-aksi="jadwal">Jadwal Resmi</button>
+            <button type="button" class="btn btn-primary-soft" data-aksi="lapor">Lapor Kondisi</button>
+          </div>
+        </article>
+
+        <article class="card" data-id="kelas-3" data-nama="Kelas 3" data-kategori="kelas" data-lantai="3" data-fasilitas="wifi stopkontak ac">
+          <header class="card-head">
+            <p class="card-meta">Kelas &middot; Lantai 3</p>
+            <span class="badge badge-tersedia" data-badge>Tersedia</span>
+          </header>
+          <h3>Kelas 3</h3>
+          <ul class="facilities" aria-label="Fasilitas Kelas 3">
+            <li>35 kursi</li><li>Wi-Fi</li><li>Stopkontak</li><li>AC</li>
+          </ul>
+          <p class="updated" data-updated>Diperbarui 5 menit lalu</p>
+          <div class="card-actions">
+            <button type="button" class="btn btn-secondary" data-aksi="jadwal">Jadwal Resmi</button>
+            <button type="button" class="btn btn-primary-soft" data-aksi="lapor">Lapor Kondisi</button>
+          </div>
+        </article>
+
+        <article class="card" data-id="lab-1" data-nama="Lab 1" data-kategori="lab" data-lantai="3" data-fasilitas="wifi stopkontak ac pc">
+          <header class="card-head">
+            <p class="card-meta">Lab. Kom &middot; Lantai 3</p>
+            <span class="badge badge-tersedia" data-badge>Tersedia</span>
+          </header>
+          <h3>Lab 1</h3>
+          <ul class="facilities" aria-label="Fasilitas Lab 1">
+            <li>50 kursi</li><li>Wi-Fi</li><li>Stopkontak</li><li>AC</li><li>PC</li>
+          </ul>
+          <p class="updated" data-updated>Diperbarui 5 menit lalu</p>
+          <div class="card-actions">
+            <button type="button" class="btn btn-secondary" data-aksi="jadwal">Jadwal Resmi</button>
+            <button type="button" class="btn btn-primary-soft" data-aksi="lapor">Lapor Kondisi</button>
+          </div>
+        </article>
+
+        <article class="card" data-id="lab-2" data-nama="Lab 2" data-kategori="lab" data-lantai="3" data-fasilitas="wifi stopkontak ac pc">
+          <header class="card-head">
+            <p class="card-meta">Lab. Kom &middot; Lantai 3</p>
+            <span class="badge badge-tersedia" data-badge>Tersedia</span>
+          </header>
+          <h3>Lab 2</h3>
+          <ul class="facilities" aria-label="Fasilitas Lab 2">
+            <li>50 kursi</li><li>Wi-Fi</li><li>Stopkontak</li><li>AC</li><li>PC</li>
+          </ul>
+          <p class="updated" data-updated>Diperbarui 5 menit lalu</p>
+          <div class="card-actions">
+            <button type="button" class="btn btn-secondary" data-aksi="jadwal">Jadwal Resmi</button>
+            <button type="button" class="btn btn-primary-soft" data-aksi="lapor">Lapor Kondisi</button>
+          </div>
+        </article>
+
+        <article class="card" data-id="selasar" data-nama="Selasar" data-kategori="bersama" data-lantai="2" data-fasilitas="wifi stopkontak">
+          <header class="card-head">
+            <p class="card-meta">Ruang Bersama &middot; Lantai 2</p>
+            <span class="badge badge-tersedia" data-badge>Tersedia</span>
+          </header>
+          <h3>Selasar</h3>
+          <ul class="facilities" aria-label="Fasilitas Selasar">
+            <li>40 kursi</li><li>Wi-Fi</li><li>Stopkontak</li><li>PC</li>
+          </ul>
+          <p class="updated" data-updated>Diperbarui 5 menit lalu</p>
+          <div class="card-actions">
+            <button type="button" class="btn btn-secondary" data-aksi="jadwal">Jadwal Resmi</button>
+            <button type="button" class="btn btn-primary-soft" data-aksi="lapor">Lapor Kondisi</button>
+          </div>
+        </article>
+
+        <article class="card" data-id="perpustakaan" data-nama="Perpustakaan" data-kategori="bersama" data-lantai="2" data-fasilitas="wifi stopkontak ac">
+          <header class="card-head">
+            <p class="card-meta">Ruang Bersama &middot; Lantai 2</p>
+            <span class="badge badge-tersedia" data-badge>Tersedia</span>
+          </header>
+          <h3>Perpustakaan</h3>
+          <ul class="facilities" aria-label="Fasilitas Perpustakaan">
+            <li>40 kursi</li><li>Wi-Fi</li><li>Stopkontak</li><li>AC</li><li>PC</li>
+          </ul>
+          <p class="updated" data-updated>Diperbarui 5 menit lalu</p>
+          <div class="card-actions">
+            <button type="button" class="btn btn-secondary" data-aksi="jadwal">Jadwal Resmi</button>
+            <button type="button" class="btn btn-primary-soft" data-aksi="lapor">Lapor Kondisi</button>
+          </div>
+        </article>
+
+      </div>
+
+      <!-- Pesan saat tidak ada ruang yang cocok dengan pencarian atau filter -->
+      <p class="empty" id="pesan-kosong" hidden>Tidak ada ruang yang cocok. Coba ubah kata kunci atau reset filter.</p>
+    </section>
+  </main>
+
+  <!-- KOMPONEN 4: Popup Jadwal Resmi (elemen dialog bawaan HTML) -->
+  <dialog id="dialog-jadwal" class="modal" aria-labelledby="judul-jadwal">
+    <header class="modal-head">
+      <div>
+        <h2 id="judul-jadwal">Jadwal ruang</h2>
+        <p class="modal-sub" id="sub-jadwal"></p>
+      </div>
+      <button type="button" class="btn-close" data-tutup aria-label="Tutup jadwal">&times;</button>
+    </header>
+    <p class="banner">Jadwal di bawah bersumber langsung dari sistem akademik resmi kampus yang disinkronkan otomatis.</p>
+    <ul class="schedule" id="daftar-jadwal"></ul>
+    <footer class="modal-foot">
+      <button type="button" class="btn btn-dark" data-tutup>Tutup</button>
+    </footer>
+  </dialog>
+
+  <!-- KOMPONEN 5: Popup Lapor Kondisi (formulir dengan validasi) -->
+  <dialog id="dialog-lapor" class="modal" aria-labelledby="judul-lapor">
+    <form id="form-lapor" novalidate>
+      <header class="modal-head">
+        <div>
+          <h2 id="judul-lapor">Lapor Kondisi Ruangan Terkini</h2>
+          <p class="modal-sub">Bantu mahasiswa lain mengetahui kondisi ruangan ini.</p>
+        </div>
+        <button type="button" class="btn-close" data-tutup aria-label="Tutup formulir">&times;</button>
+      </header>
+
+      <div class="field">
+        <label for="lapor-ruang">Nama ruangan</label>
+        <input type="text" id="lapor-ruang" name="ruang" readonly>
+      </div>
+
+      <div class="field">
+        <label for="lapor-kondisi">Pilih kondisi aktual</label>
+        <select id="lapor-kondisi" name="kondisi" required aria-describedby="error-kondisi">
+          <option value="">-- Pilih kondisi --</option>
+          <option value="terpakai">Penuh / sedang digunakan</option>
+          <option value="tersedia">Kosong / bisa digunakan</option>
+        </select>
+        <p class="error" id="error-kondisi" role="alert"></p>
+      </div>
+
+      <div class="field">
+        <label for="lapor-catatan">Catatan tambahan (opsional)</label>
+        <textarea id="lapor-catatan" name="catatan" rows="3" maxlength="120" aria-describedby="hitung-catatan"></textarea>
+        <p class="hint" id="hitung-catatan">0 / 120 karakter</p>
+      </div>
+
+      <footer class="modal-foot modal-foot-split">
+        <button type="button" class="btn btn-secondary" data-tutup>Batal</button>
+        <button type="submit" class="btn btn-primary">Kirim Laporan</button>
+      </footer>
+    </form>
+  </dialog>
+
+  <!-- Notifikasi singkat setelah laporan terkirim -->
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+  <!-- KOMPONEN 6: Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <p>RuangKampus &middot; Prototipe tugas UI/UX. Data ruang dan jadwal hanya contoh.</p>
+    </div>
+  </footer>
+</body>
+</html>

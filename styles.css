@@ -1,0 +1,541 @@
+/* ==========================================================
+   RuangKampus - styles.css
+   Semua warna dan jarak memakai custom property di :root,
+   jadi tampilan konsisten dan mudah diubah dari satu tempat.
+   ========================================================== */
+
+/* ---------- 1. Design tokens (custom property) ---------- */
+:root {
+  /* Warna */
+  --color-bg: #f3f1ff;
+  --color-surface: #ffffff;
+  --color-text: #1f1b2e;
+  --color-muted: #5b5870;
+  --color-border: #d9d5ea;
+  --color-primary: #5b3fe0;
+  --color-primary-dark: #4527c9;
+  --color-primary-soft: #e4ddff;
+  --color-neutral: #e2e0ea;
+  --color-dark: #111111;
+  --color-success-bg: #bbf7d0;
+  --color-success-text: #14532d;
+  --color-danger-bg: #fecaca;
+  --color-danger-text: #7f1d1d;
+  --color-error: #b91c1c;
+  --color-overlay: rgba(17, 12, 40, 0.55);
+
+  /* Jarak: skala kelipatan 8 px */
+  --space-1: 8px;
+  --space-2: 16px;
+  --space-3: 24px;
+  --space-4: 32px;
+
+  /* Bentuk dan teks */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-pill: 999px;
+  --tap-size: 44px; /* area ketuk minimal (NFR aksesibilitas) */
+  --font-base: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  /* Font logo sesuai Figma; bila gagal dimuat, browser memakai font cadangan */
+  --font-logo: "Jolly Lodger", "Segoe Print", cursive;
+}
+
+/* ---------- 2. Reset ringan dan dasar ---------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-base);
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+h1, h2, h3, p, ul, fieldset {
+  margin: 0;
+  padding: 0;
+}
+
+ul {
+  list-style: none;
+}
+
+/* Lebar isi halaman: 4 kolom di ponsel dengan margin 16 px */
+.container {
+  width: min(100% - 2 * var(--space-2), 960px);
+  margin-inline: auto;
+}
+
+/* Fokus keyboard yang jelas untuk semua elemen interaktif */
+:focus-visible {
+  outline: 3px solid var(--color-primary-dark);
+  outline-offset: 2px;
+}
+
+/* Teks yang hanya dibaca pembaca layar */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: absolute;
+  left: var(--space-2);
+  top: -100px;
+  z-index: 100;
+  padding: var(--space-1) var(--space-2);
+  background: var(--color-dark);
+  color: #fff;
+  border-radius: var(--radius-sm);
+}
+
+.skip-link:focus {
+  top: var(--space-1);
+}
+
+/* ---------- 3. Header dan footer ---------- */
+.site-header {
+  position: sticky; /* tetap di atas saat daftar digulir */
+  top: 0;
+  z-index: 10;
+  background: var(--color-surface);
+  box-shadow: 0 2px 8px rgba(31, 27, 46, 0.12);
+}
+
+.site-header .container {
+  padding-block: var(--space-2);
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.logo span {
+  color: var(--color-primary);
+}
+
+.site-footer {
+  margin-top: var(--space-4);
+  padding-block: var(--space-3);
+  color: var(--color-muted);
+  font-size: 0.875rem;
+  text-align: center;
+}
+
+/* ---------- 4. Panel pencarian, tab, dan filter ---------- */
+main {
+  padding-top: var(--space-3);
+}
+
+.panel {
+  display: grid;
+  gap: var(--space-2);
+  padding: var(--space-2);
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 2px 8px rgba(31, 27, 46, 0.1);
+}
+
+input[type="search"],
+input[type="text"],
+select,
+textarea {
+  width: 100%;
+  min-height: var(--tap-size);
+  padding: var(--space-1) var(--space-2);
+  background: var(--color-surface);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font: inherit;
+}
+
+input[readonly] {
+  background: var(--color-neutral);
+  color: var(--color-muted);
+}
+
+.tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+}
+
+.tab {
+  min-height: var(--tap-size);
+  padding: var(--space-1) var(--space-2);
+  background: var(--color-neutral);
+  color: var(--color-text);
+  border: 0;
+  border-radius: var(--radius-sm);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.tab[aria-pressed="true"] {
+  background: var(--color-primary);
+  color: #fff;
+}
+
+.filter summary {
+  min-height: var(--tap-size);
+  display: flex;
+  align-items: center;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.filter fieldset {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-1) var(--space-2);
+  border: 0;
+}
+
+.filter label {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  min-height: var(--tap-size);
+  cursor: pointer;
+}
+
+.filter input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  accent-color: var(--color-primary);
+}
+
+/* ---------- 5. Tombol ---------- */
+.btn {
+  min-height: var(--tap-size);
+  padding: var(--space-1) var(--space-2);
+  border: 0;
+  border-radius: var(--radius-md);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-primary {
+  background: var(--color-primary);
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background: var(--color-primary-dark);
+}
+
+.btn-primary-soft {
+  background: var(--color-primary-soft);
+  color: var(--color-primary-dark);
+}
+
+.btn-secondary {
+  background: var(--color-neutral);
+  color: var(--color-text);
+}
+
+.btn-dark {
+  background: var(--color-dark);
+  color: #fff;
+}
+
+.btn-text {
+  background: none;
+  color: var(--color-primary-dark);
+  text-decoration: underline;
+}
+
+.btn-close {
+  width: var(--tap-size);
+  height: var(--tap-size);
+  background: none;
+  border: 0;
+  border-radius: var(--radius-sm);
+  color: var(--color-muted);
+  font-size: 1.75rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+/* ---------- 6. Daftar dan kartu ruang ---------- */
+.rooms {
+  margin-top: var(--space-3);
+}
+
+.rooms-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-1);
+  margin-bottom: var(--space-2);
+}
+
+.rooms-head h2 {
+  font-size: 1.125rem;
+}
+
+.count {
+  padding: 4px var(--space-1);
+  background: var(--color-neutral);
+  border-radius: var(--radius-pill);
+  color: var(--color-muted);
+  font-size: 0.8125rem;
+}
+
+.room-list {
+  display: grid;
+  gap: var(--space-2);
+  grid-template-columns: 1fr;
+}
+
+.card {
+  display: grid;
+  align-content: start; /* isi kartu rapat ke atas, tidak melebar saat kartu sebaris lebih tinggi */
+  gap: var(--space-1);
+  padding: var(--space-2);
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 2px 8px rgba(31, 27, 46, 0.1);
+}
+
+.card[hidden] {
+  display: none; /* kartu yang tersaring disembunyikan */
+}
+
+.card-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-1);
+}
+
+.card-meta {
+  color: var(--color-muted);
+  font-size: 0.875rem;
+}
+
+.card h3 {
+  font-size: 1.25rem;
+}
+
+.facilities {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+  padding-block: var(--space-1);
+  border-block: 1px solid var(--color-border);
+}
+
+.facilities li {
+  padding: 2px var(--space-1);
+  background: var(--color-bg);
+  border-radius: var(--radius-sm);
+  font-size: 0.875rem;
+}
+
+.updated {
+  color: var(--color-muted);
+  font-size: 0.8125rem;
+}
+
+.card-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-1);
+}
+
+/* Badge status: warna + label teks, supaya tidak hanya bergantung pada warna */
+.badge {
+  padding: 4px var(--space-1);
+  border-radius: var(--radius-pill);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.badge-tersedia {
+  background: var(--color-success-bg);
+  color: var(--color-success-text);
+}
+
+.badge-terpakai {
+  background: var(--color-danger-bg);
+  color: var(--color-danger-text);
+}
+
+.empty {
+  padding: var(--space-3);
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  color: var(--color-muted);
+  text-align: center;
+}
+
+/* ---------- 7. Popup (dialog) ---------- */
+.modal {
+  width: min(92vw, 420px);
+  padding: var(--space-3);
+  background: var(--color-surface);
+  color: var(--color-text);
+  border: 0;
+  border-radius: var(--radius-lg);
+}
+
+.modal::backdrop {
+  background: var(--color-overlay);
+}
+
+.modal-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-1);
+  margin-bottom: var(--space-2);
+}
+
+.modal-head h2 {
+  font-size: 1.25rem;
+}
+
+.modal-sub {
+  color: var(--color-muted);
+  font-size: 0.875rem;
+}
+
+.modal-foot {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: var(--space-3);
+}
+
+.modal-foot-split {
+  gap: var(--space-1);
+}
+
+.modal-foot-split .btn {
+  flex: 1;
+}
+
+.banner {
+  padding: var(--space-1) var(--space-2);
+  background: var(--color-primary-soft);
+  color: var(--color-primary-dark);
+  border-radius: var(--radius-md);
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.schedule {
+  display: grid;
+  gap: var(--space-1);
+  margin-top: var(--space-2);
+}
+
+.schedule li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-1);
+  padding: var(--space-1) var(--space-2);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+.schedule .time {
+  font-weight: 700;
+}
+
+.schedule .desc {
+  color: var(--color-muted);
+  font-size: 0.875rem;
+}
+
+/* ---------- 8. Formulir lapor ---------- */
+.field {
+  display: grid;
+  gap: 4px;
+  margin-bottom: var(--space-2);
+}
+
+.field label {
+  font-size: 0.875rem;
+  font-weight: 700;
+}
+
+.field [aria-invalid="true"] {
+  border-color: var(--color-error);
+}
+
+.error {
+  min-height: 1.25rem;
+  color: var(--color-error);
+  font-size: 0.875rem;
+}
+
+.hint {
+  color: var(--color-muted);
+  font-size: 0.8125rem;
+  text-align: right;
+}
+
+/* ---------- 9. Notifikasi ---------- */
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: var(--space-3);
+  z-index: 50;
+  max-width: calc(100% - 2 * var(--space-2));
+  padding: var(--space-1) var(--space-3);
+  background: var(--color-dark);
+  color: #fff;
+  border-radius: var(--radius-pill);
+  transform: translateX(-50%);
+}
+
+.toast[hidden] {
+  display: none;
+}
+
+/* ---------- 10. Responsif: tablet dan desktop ---------- */
+@media (min-width: 640px) {
+  .room-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .filter fieldset {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (min-width: 960px) {
+  .room-list {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Hormati pengguna yang memilih mengurangi animasi */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    scroll-behavior: auto !important;
+    transition: none !important;
+  }
+}
