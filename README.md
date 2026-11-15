@@ -49,13 +49,9 @@ Opsional, lewat server lokal:
 python3 -m http.server 8000
 # lalu buka http://localhost:8000
 ```
+## Demo
 
-## Menerbitkan lewat GitHub Pages (opsional)
-
-1. Pastikan repo **publik** dan `index.html` ada di folder akar.
-2. Buka **Settings → Pages**.
-3. Pada **Build and deployment**, pilih **Deploy from a branch**, branch `main`, folder `/ (root)`, lalu **Save**.
-4. Tunggu sebentar. Alamat situs muncul di halaman yang sama.
+Lihat langsung di: https://ziyy12.github.io/ruangkampus-beranda/
 
 ## Catatan desain
 
